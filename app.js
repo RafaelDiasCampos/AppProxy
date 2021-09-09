@@ -6,7 +6,7 @@ const hostname = '0.0.0.0';
 const port = 443;
 
 const remoteServer = process.env.REMOTE_SERVER;
-// const localServer = ""
+const localServer = process.env.LOCAL_SERVER;
 
 const options = {
     key: fs.readFileSync('key.pem'),
@@ -64,7 +64,7 @@ const analyzeResponse = function(req, res, data) {
 const proxyRequest = function(req, res, data) {
     headers = replaceHeaders(req.headers, localServer, remoteServer);
     // url = req.headers.origin.replace(localServer, remoteServer);
-    url = remoteServer + req.url;
+    url = `https://${remoteServer}${req.url}`;
 
     makeRequest(url, headers, req.method, data)
     .then(remoteResponse => {
