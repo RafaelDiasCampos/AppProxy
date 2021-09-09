@@ -1,6 +1,6 @@
-import { createServer } from 'https';
-import { readFileSync } from 'fs';
-import { default as axios } from 'axios';
+const https = require('https');
+const fs = require('fs');
+const { default: axios } = require('axios');
 
 const hostname = '0.0.0.0';
 const port = 443;
@@ -9,13 +9,13 @@ const remoteServer = process.env.REMOTE_SERVER;
 // const localServer = ""
 
 const options = {
-    key: readFileSync('key.pem'),
-    cert: readFileSync('cert.pem')
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
 };
 
 const debugMode = process.env.DEBUG || false;
 
-const server = createServer(options, (req, res) => {
+const server = https.createServer(options, (req, res) => {
     let requestData = '';
 
     req.on('data', chunk => {
